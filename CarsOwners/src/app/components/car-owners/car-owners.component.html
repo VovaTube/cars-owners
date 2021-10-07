@@ -1,0 +1,51 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col ">
+            hello
+        </div>
+        <div class="col">
+            hello
+        </div>
+    </div>
+    <div class="row">
+            <div class="col">
+                <div class="table-responsive">
+                    <table class="table table-hover" id="observetable">
+                        <thead style="border-bottom: solid;">
+                          <tr>
+                            <th scope="col">№</th>
+                            <th scope="col">Прізвище</th>
+                            <th scope="col">Імя</th>
+                            <th scope="col">По батькові</th>
+                            <th scope="col">Кількість авто</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                            <tr  *ngFor="let owner of databaseowners; let i=index"
+                                 style="cursor: pointer;"
+                                 (click)="showDetails($event, owner)"
+                                 >
+                                <td >{{i+1}}</td>
+                                <td>{{owner.aFirstName}}</td>
+                                <td>{{owner.aMiddleName}}</td>
+                                <td>{{owner.aLastName}}</td>
+                                <td>{{owner.aCars.length}}</td>
+                               
+
+                                
+                            </tr>
+                        </tbody>
+                        <thead style="border-top: solid;">
+                            <tr>
+                              <th scope="col">№</th>
+                              <th scope="col">Прізвище</th>
+                              <th scope="col">Імя</th>
+                              <th scope="col">По батькові</th>
+                              <th scope="col">Кількість авто</th>
+                            </tr>
+                          </thead>
+                      </table>
+                </div>
+            </div>
+    </div>
+</div>
