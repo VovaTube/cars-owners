@@ -1,30 +1,41 @@
 <div class="container-fluid">
-    <div class="row">
-        <div class="col ">
-            hello
-        </div>
-        <div class="col">
-            hello
+    <div class="row main-button-row control-row">
+        <div class="col main-button-cols">
+            <button class="btn btn-success btn-sm main-button" 
+                    (click) = "addNewOwner()"                
+            > Добавить </button>
+            <button class="btn btn-secondary btn-sm main-button" 
+                    (click) = "viewOwner()"                
+            > Просмотр </button>
+            <button class="btn btn-primary btn-sm main-button" 
+                    (click) = "editOwner()"                
+            > Редактировать </button>
+            <button class="btn btn-danger btn-sm main-button" 
+                    (click) = "deleteOwner()"                
+            > Удалить </button>
         </div>
     </div>
     <div class="row">
             <div class="col">
                 <div class="table-responsive">
-                    <table class="table table-hover" id="observetable">
+                    <table class="table" id="observetable">
                         <thead style="border-bottom: solid;">
                           <tr>
                             <th scope="col">№</th>
-                            <th scope="col">Прізвище</th>
-                            <th scope="col">Імя</th>
-                            <th scope="col">По батькові</th>
-                            <th scope="col">Кількість авто</th>
+                            <th scope="col">Фамилия</th>
+                            <th scope="col">Имя</th>
+                            <th scope="col">Отчество</th>
+                            <th scope="col">Количество авто</th>
                           </tr>
                         </thead>
                         <tbody>
                             <tr  *ngFor="let owner of databaseowners; let i=index"
                                  style="cursor: pointer;"
-                                 (click)="showDetails($event, owner)"
-                                 >
+                                 (click)="selectOwner($event, i)"
+                                 (dblclick)="editOwner($event, i)"
+                                 [ngClass]="{
+                                    'selectable': selectedrowowner===i}"
+                                >
                                 <td >{{i+1}}</td>
                                 <td>{{owner.aFirstName}}</td>
                                 <td>{{owner.aMiddleName}}</td>

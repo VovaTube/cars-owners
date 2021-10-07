@@ -1,10 +1,10 @@
-.container .table {
-    background-color:  white;
- }
  .table td, .table th{
      padding: 0;
      text-align:  center;
 
+ }
+.selectable{
+     background-color: rgb(79, 219, 154);
  }
  .elisnegative{
      background-color: rgb(119, 110, 110);
@@ -12,6 +12,29 @@
  .elispositive{
      background-color: rgb(119, 110, 110);
  }
+ 
+ table tbody  tr:hover {
+    background-color: rgb(204, 201, 201);
+}
+table  tr{
+    line-height: 2.5rem;
+}
  .activepossition{
      background-color: rgba(57, 223, 71, 0.4);
  }
+
+
+ .container-fluid .main-button{
+ margin-right: 5px;
+ }
+ .container-fluid .main-button-row{
+     padding-top: 10px;
+ }
+ .table t, .table th{
+
+}
+.control-row{
+    position:sticky;
+    top: 0;
+    z-index: 1050;
+}

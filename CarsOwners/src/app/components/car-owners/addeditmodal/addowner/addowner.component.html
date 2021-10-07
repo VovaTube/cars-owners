@@ -9,7 +9,7 @@
                 </div>
                 <div class="row justify-content-center mb-1 mt-2">
                     <div class="col col-owner">
-                        Власник
+                        Собственник
                     </div>
                 </div>
                 <div class="form-row">
@@ -19,14 +19,12 @@
                         formControlName="firsname"
                         class="form-control"
                         id="ownerfirsname"
-                        placeholder="Прізвище"
-                        [ngClass]="{'is-invalid': submitted && form.name.errors}"
+                        placeholder="Фамилия"
+                        [ngClass]="{'is-invalid': submitted && form.firsname.errors || form.firsname.touched && form.firsname.errors}"
                         />
-                        <div *ngIf="submitted && form.name.errors" class="text-danger">
-                            <div *ngIf="form.firsname.errors.required">Введіть ім'я приймача</div>
-                            <div *ngIf="form.firsname.errors.minlength">Мінімум 5 символів</div>
-                            <div *ngIf="form.firsname.errors.maxlength">Максимум 20 символів</div>
-                            <div *ngIf="form.firsname.errors.pattern">Тільки цифри та літери</div>
+                        <div *ngIf="submitted && form.firsname.errors" class="text-danger">
+                            <div *ngIf="form.firsname.errors.required">Укажите фамилию</div>
+                            <div *ngIf="form.firsname.errors.pattern">Только буквы</div>
                         </div>
                     </div>
                 </div>
@@ -37,14 +35,12 @@
                         formControlName="middlename"
                         class="form-control"
                         id="ownermiddlename"
-                        placeholder="По батькові"
-                        [ngClass]="{'is-invalid': submitted && form.name.errors}"
+                        placeholder="Имя"
+                        [ngClass]="{'is-invalid': submitted && form.middlename.errors || form.middlename.touched && form.middlename.errors}"
                         />
-                        <div *ngIf="submitted && form.name.errors" class="text-danger">
-                            <div *ngIf="form.middlename.errors.required">Введіть ім'я приймача</div>
-                            <div *ngIf="form.middlename.errors.minlength">Мінімум 5 символів</div>
-                            <div *ngIf="form.middlename.errors.maxlength">Максимум 20 символів</div>
-                            <div *ngIf="form.middlename.errors.pattern">Тільки цифри та літери</div>
+                        <div *ngIf="submitted && form.middlename.errors" class="text-danger">
+                            <div *ngIf="form.middlename.errors.required">Укажите имя</div>
+                            <div *ngIf="form.middlename.errors.pattern">Только буквы</div>
                         </div>
                     </div>
                 </div>
@@ -55,14 +51,13 @@
                         formControlName="lastName"
                         class="form-control"
                         id="ownerlastName"
-                        placeholder="Прізвище"
-                        [ngClass]="{'is-invalid': submitted && form.name.errors}"
+                        placeholder="Отчество"
+                        [ngClass]="{'is-invalid': submitted && form.lastName.errors || form.lastName.touched && form.lastName.errors }"
+                        [disabled] = "disableEditing"
                         />
-                        <div *ngIf="submitted && form.name.errors" class="text-danger">
-                            <div *ngIf="form.lastName.errors.required">Введіть ім'я приймача</div>
-                            <div *ngIf="form.lastName.errors.minlength">Мінімум 5 символів</div>
-                            <div *ngIf="form.lastName.errors.maxlength">Максимум 20 символів</div>
-                            <div *ngIf="form.lastName.errors.pattern">Тільки цифри та літери</div>
+                        <div *ngIf="submitted && form.lastName.errors" class="text-danger">
+                            <div *ngIf="form.lastName.errors.required">Укажите отчество</div>
+                            <div *ngIf="form.lastName.errors.pattern">Только буквы</div>
                         </div>
                     </div>
                 </div>
@@ -76,7 +71,7 @@
                     <div class="col">Марка</div>
                     <div class="col">Модель</div>
                     <div class="col">Год</div>
-                    <div class="col"></div>
+                    <div class="col" *ngIf="!disableEditing"></div>
                 </div>
                 <div class="form-row"
                 formArrayName="cars"
@@ -84,26 +79,31 @@
                     let parameter of form.cars.value.controls;
                     let paramIndex = index
                     ">
-                    <d iv class="col justify-content-center align-items-center">
+                    <div class="col justify-content-center align-items-center">
                         <div [formGroup]="parameter">
                           <input
                             class="form-control"
                             type="text"
                             formControlName="carnumber"
                             placeholder="Номер авто"
-                            [ngClass]="{'is-invalid': submitted && parameter.controls.carnumber.errors}"
-                             
+                            [ngClass]="{'is-invalid': parameter.controls.carnumber.touched&&parameter.controls.carnumber.invalid}"
+                            style="text-transform: uppercase;"
                           />
                         </div>
                         <div class="row justify-content-center mb-1">
-                          <div *ngIf="submitted && parameter.controls.carnumber.errors" class="text-danger">
-                            <div *ngIf="parameter.controls.carnumber.errors.required">
-                              Назва параметра не має бути пустою
+                          <div class="col">
+                            <div *ngIf="submitted && parameter.controls.carnumber.touched&&parameter.controls.carnumber.errors ||
+                                        submitted &&parameter.controls.carnumber.errors" class="text-danger">
+                              <div *ngIf="parameter.controls.carnumber.errors.required">
+                                Поле не должно быть пустым
+                              </div>
+                              <div *ngIf="parameter.controls.carnumber.errors.pattern">
+                                Поле не отвечает шаблону АА7777ВВ
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </d>
-
+                      </div>
                       <div class="col justify-content-center align-items-center">
                         <div [formGroup]="parameter">
                           <input
@@ -111,19 +111,22 @@
                             type="text"
                             formControlName="carbrand"
                             placeholder="Модель"
-                            [ngClass]="{'is-invalid': submitted && parameter.carbrand.errors}"
-                             
+                            [ngClass]="{'is-invalid': parameter.controls.carbrand.touched&&parameter.controls.carbrand.errors}"
                           />
                         </div>
                         <div class="row justify-content-center mb-1">
-                          <div *ngIf="submitted && parameter.controls.carbrand.errors" class="text-danger">
-                            <div *ngIf="parameter.controls.carbrand.errors.required">
-                              Назва параметра не має бути пустою
+                          <div class="col">
+                            <div *ngIf="submitted && parameter.controls.carbrand.errors" class="text-danger">
+                              <div *ngIf="parameter.controls.carbrand.errors.required">
+                                Поле не должно быть пустым
+                              </div>
+                              <div *ngIf="parameter.controls.carbrand.errors.pattern">
+                                Только буквы
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
-
                       <div class="col justify-content-center align-items-center">
                         <div [formGroup]="parameter">
                           <input
@@ -131,14 +134,18 @@
                             type="text"
                             formControlName="carmodelname"
                             placeholder="Марка"
-                            [ngClass]="{'is-invalid': submitted && parameter.carmodelname.carnumber.errors}"
-                             
+                            [ngClass]="{'is-invalid': parameter.controls.carmodelname.touched&&parameter.controls.carmodelname.errors}"
                           />
                         </div>
                         <div class="row justify-content-center mb-1">
-                          <div *ngIf="submitted && parameter.controls.carmodelname.errors" class="text-danger">
-                            <div *ngIf="parameter.controls.carmodelname.errors.required">
-                              Назва параметра не має бути пустою
+                          <div class="col">
+                            <div *ngIf="submitted && parameter.controls.carmodelname.errors" class="text-danger">
+                              <div *ngIf="parameter.controls.carmodelname.errors.required">
+                                Поле не должно быть пустым
+                              </div>
+                              <div *ngIf="parameter.controls.carmodelname.errors.pattern">
+                                Только буквы
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -150,46 +157,60 @@
                             class="form-control"
                             type="number"
                             min="1990"
+                            [max]="this.getCarrentYear()"
                             formControlName="yearproduction"
-                            placeholder="Рік"
-                            [ngClass]="{'is-invalid': submitted && parameter.yearproduction.carnumber.errors}"
-                             
+                            placeholder="Год"
+                            [ngClass]="{'is-invalid': parameter.controls.yearproduction.touched&&parameter.controls.yearproduction.errors}"
                           />
                         </div>
                         <div class="row justify-content-center mb-1">
-                          <div *ngIf="submitted && parameter.controls.yearproduction.errors" class="text-danger">
-                            <div *ngIf="parameter.controls.yearproduction.errors.required">
-                              Назва параметра не має бути пустою
+                          <div class="col">
+                            <div *ngIf="submitted && parameter.controls.yearproduction.errors" class="text-danger">
+                              <div *ngIf="parameter.controls.yearproduction.errors.required">
+                                Поле не должно быть пустым
+                              </div>
+                              <div *ngIf="parameter.controls.yearproduction.errors.pattern">
+                                Год производства не отвечает требованиям: 1990 - н.в
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                      <div class="col justify-content-start align-items-center d-flex">
+                      <div class="col justify-content-start align-items-center d-flex" *ngIf="!disableEditing" >
                           <button class="btn btn-danger" 
                                   (click)="delleteCar(paramIndex)"          
                           >
                               <span>
                                 <i class="fa fa-trash"></i>
-
                               </span>
                           </button>
                       </div>
                 </div>
-                <div class="form-row mt-2">
-                    <div class="col">
-                        <button class="btn btn-primary btn-sm" 
-                                (click) = "addNewCar()"                
-                        > Добавить автомобиль </button>
-                    </div>
+                <div class="row" *ngIf="existingcarflag">
+                  <div class="col" class="text-danger" style="display: contents;
+                  text-transform: uppercase;">
+                        Один из указаных автомобилей уже пренадлежит другому собственнику!
+                  </div>
                 </div>
-                <div class="form-row mt-2">
-                    <div class="col" style="text-align: center;">
-                        <button class="btn btn-success" 
-                        (click)="submit()"
-                        > Сохранить </button>
-                    </div>
+                <div class="row" *ngIf="!disableEditing">
+                  <div class="col">
+                    <div class="form-row mt-2">
+                      <div class="col">
+                          <button class="btn btn-primary btn-sm" 
+                                  (click) = "addNewCar()"                
+                          > Добавить автомобиль </button>
+                      </div>
+                  </div>
+                  <div class="form-row mt-2">
+                      <div class="col" style="text-align: center;">
+                          <button class="btn btn-success" 
+                          [disabled] = "this.ownerForm.invalid || this.form.cars.value.invalid"
+                          (click)="submit()"
+                          > Сохранить </button>
+                      </div>
+                  </div>
+                  </div>
                 </div>
-
             </form>
         </div>
     </div>

@@ -1,0 +1,17 @@
+<div class="conteiner">
+    <div class="row">
+        <div class="col">
+            <div id="confirm-window">
+                <h6 class="myTitle">{{actionName}}</h6>
+                <div class="row align-items-start mb-1  d-drid gap-2 mx-auto">    
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 optionalButtons">
+                            <button class="btn myMainBtn btn-outline-success btn-sm btn-block" (click)="confirm()">ДА</button> 
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 optionalButtons">
+                            <button class="myDangerBtn btn btn-outline-danger btn-sm btn-block" (click)="cancel()">НЕТ</button>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
